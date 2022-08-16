@@ -1,0 +1,16 @@
+*.txt
+venv**/
+# **/requirements.txt
+.vscode
+*.pyc
+# **.json
+**/test/htmlcov
+**/test/.coverage
+**/test/__pycache__
+**/test/.pytest_cache
+
+*.xml
+*.puml
+.idea/*
+*.log
+*.json
