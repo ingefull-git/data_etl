@@ -1,0 +1,22 @@
+[flake8]
+max-line-length = 100
+ignore = E501,
+        W503,
+        E231,
+        W605,
+        F405,
+        E731,
+        E722,
+        ; F841,
+        F403,
+        E402,
+        E265
+
+per-file-ignores =
+    run_uplift_temp_asset.py: F541, F841
+    update_uplift.py: F541, F841
+    error.py: E722,F821
+    remove_rows.py: F541, F841
+    armada_api.py: F541
+    initiate_job.py: F541
+    da_API.py: F541
