@@ -1,16 +1,22 @@
 *.txt
 venv**/
 # **/requirements.txt
-.vscode
+.vscode/
 *.pyc
 # **.json
 **/test/htmlcov
 **/test/.coverage
 **/test/__pycache__
 **/test/.pytest_cache
+.**
+
+htmlcov/
 
 *.xml
 *.puml
 .idea/*
 *.log
 *.json
+
+!requirements.txt
+!.circleci/
