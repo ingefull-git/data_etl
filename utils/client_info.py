@@ -13,8 +13,7 @@ class ClientPowerSchool(ClientGeneric):
         """
         It returns a list of all the elements in the tree.
         """
-        full_list = self.get('fileList',[])
-        full_list.extend(self.get('byYearList',[]))
-        full_list.extend(self.get('streamList',[]))
+        full_list = self.get("fileList", [])
+        full_list.extend(self.get("byYearList", []))
+        full_list.extend(self.get("streamList", []))
         return full_list
-

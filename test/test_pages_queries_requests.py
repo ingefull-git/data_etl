@@ -1,16 +1,14 @@
-from ast import Raise
+import os
+from datetime import datetime
+
 import mock
-from requests import head, request
+from mockfactory import MockFactory
+from PowerSchool import powerQueriesPull_generic
 
 from ..powerQueriesPull_generic import *
-from PowerSchool import powerQueriesPull_generic
-import os
-import pytest
-from datetime import datetime
-from mockfactory import MockFactory
 
 
-#@pytest.mark.skip
+# @pytest.mark.skip
 def test_pages_queries_request_without_yearid(global_config):
     logger, config_file, session, client = global_config
     result = pages_queries_request(session, client, client.file_list, yearid=None)
@@ -32,7 +30,7 @@ def test_pages_queries_request_without_yearid(global_config):
     assert lines[-1].strip() == expected_trailer
 
 
-#@pytest.mark.skip
+# @pytest.mark.skip
 def test_pages_queries_request_with_yearid(global_config):
     logger, config_file, session, client = global_config
     result = pages_queries_request(session, client, client.by_year_list, yearid=31)
@@ -54,7 +52,7 @@ def test_pages_queries_request_with_yearid(global_config):
     assert lines[-1].strip() == expected_trailer
 
 
-#@pytest.mark.skip
+# @pytest.mark.skip
 def test_pages_queries_request_500(global_config):
     logger, config_file, session, client = global_config
     result = pages_queries_request(session, client, client.by_year_list, yearid=666)
@@ -72,12 +70,33 @@ def test_pages_queries_request_500(global_config):
     }
 
 
-#@pytest.mark.skip
+# @pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=1)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
-def test_pages_queries_request_timeout_exception(mock_session, mock_pages, response_422, response_read_timeout, response_200_with_content, response_retry_exception, global_config):
+def test_pages_queries_request_timeout_exception(
+    mock_session,
+    mock_pages,
+    response_422,
+    response_read_timeout,
+    response_200_with_content,
+    response_retry_exception,
+    global_config,
+):
     logger, config_file, session, client = global_config
-    mock_object = MockFactory(status = [response_422, response_read_timeout, response_200_with_content, response_read_timeout, response_200_with_content, response_422, response_retry_exception, response_200_with_content, response_retry_exception, response_200_with_content])
+    mock_object = MockFactory(
+        status=[
+            response_422,
+            response_read_timeout,
+            response_200_with_content,
+            response_read_timeout,
+            response_200_with_content,
+            response_422,
+            response_retry_exception,
+            response_200_with_content,
+            response_retry_exception,
+            response_200_with_content,
+        ]
+    )
     mock_session.post.side_effect = mock_object.side_effects
     result = pages_queries_request(mock_session, client, client.by_year_list, yearid=31)
     args = mock_session.post.call_args_list
@@ -91,28 +110,34 @@ def test_pages_queries_request_timeout_exception(mock_session, mock_pages, respo
     assert isinstance(log_time, datetime)
 
 
-#@pytest.mark.skip
+# @pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=1)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
-def test_mock_factory_exception_retry(mock_session, mock_pages, response_retry_exception, response_404, global_config):
+def test_mock_factory_exception_retry(
+    mock_session, mock_pages, response_retry_exception, response_404, global_config
+):
     logger, config_file, session, client = global_config
-    mock_object = MockFactory(status=[response_404,response_retry_exception])
+    mock_object = MockFactory(status=[response_404, response_retry_exception])
     mock_session.post.side_effect = mock_object.side_effects
     result = pages_queries_request(mock_session, client, client.by_year_list, yearid=31)
-    assert 'RetryError' in result.values()[0]
-    assert 'Status code: 404' in result.values()[0]
+    assert "RetryError" in result.values()[0]
+    assert "Status code: 404" in result.values()[0]
 
-#@pytest.mark.skip
+
+# @pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=1)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
-def test_mock_factory_exception_retry_200(mock_session, mock_pages, response_retry_exception, response_200,global_config):
+def test_mock_factory_exception_retry_200(
+    mock_session, mock_pages, response_retry_exception, response_200, global_config
+):
     logger, config_file, session, client = global_config
     mock_object = MockFactory(status=[response_retry_exception, response_200])
     mock_session.post.side_effect = mock_object.side_effects
     result = pages_queries_request(mock_session, client, client.by_year_list, yearid=31)
     assert result.values()[0][0] == 1
 
-#@pytest.mark.skip
+
+# @pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=1)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
 def test_mock_factory_code_200(mock_session, mock_pages, response_404, global_config):
@@ -120,13 +145,15 @@ def test_mock_factory_code_200(mock_session, mock_pages, response_404, global_co
     mock_object = MockFactory(status=[response_404])
     mock_session.post.side_effect = mock_object.side_effects
     result = pages_queries_request(mock_session, client, client.by_year_list, yearid=31)
-    assert 'Status code: 404' in result.values()[0]
+    assert "Status code: 404" in result.values()[0]
 
 
 ##@pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=110)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
-def test_mock_pages_queries_page_count_gt_100(mock_session, mock_getnum, global_config, response_200):
+def test_mock_pages_queries_page_count_gt_100(
+    mock_session, mock_getnum, global_config, response_200
+):
     logger, config_file, session, client = global_config
     mock_object = MockFactory(status=[response_200])
     mock_session.post.side_effect = mock_object.side_effects
@@ -137,7 +164,9 @@ def test_mock_pages_queries_page_count_gt_100(mock_session, mock_getnum, global_
 ##@pytest.mark.skip
 @mock.patch.object(powerQueriesPull_generic, "getnum_pages", return_value=110)
 @mock.patch.object(powerQueriesPull_generic.requests, "session")
-def test_mock_pages_queries_page_count_gt_100_with_payload(mock_session, mock_getnum, global_config, response_200, response_404):
+def test_mock_pages_queries_page_count_gt_100_with_payload(
+    mock_session, mock_getnum, global_config, response_200, response_404
+):
     logger, config_file, session, client = global_config
     mock_object = MockFactory(status=[response_404, response_200])
     mock_session.post.side_effect = mock_object.side_effects

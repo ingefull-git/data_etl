@@ -1,13 +1,8 @@
-from ast import Raise
-import mock
-from requests import head, request
+import os
+
+import pytest
 
 from ..powerQueriesPull_generic import *
-from PowerSchool import powerQueriesPull_generic
-import os
-import pytest
-from datetime import datetime
-from mockfactory import MockFactory
 
 
 def test_remove_old_tmp_files():

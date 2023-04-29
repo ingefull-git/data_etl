@@ -1,9 +1,7 @@
 import requests
-from requests.adapters import HTTPAdapter, Retry
-
-from decorators import debuglog
-from decorators import retry_requests, for_all_methods
 from base import RequestRetryGeneric
+from decorators import debuglog, for_all_methods, retry_requests
+from requests.adapters import HTTPAdapter, Retry
 
 
 @debuglog()
@@ -27,12 +25,12 @@ def session_retry(retries=5, backoff_factor=2, status_forcelist=(500, 502, 503, 
         status_forcelist=status_forcelist,
     )
     adapter = HTTPAdapter(max_retries=retry)
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
     return session
 
 
-@for_all_methods(['__init__'], debuglog())
+@for_all_methods(["__init__"], debuglog())
 # > T
 class RequestRetryPowerSchool(RequestRetryGeneric):
     """
@@ -47,25 +45,24 @@ class RequestRetryPowerSchool(RequestRetryGeneric):
         """
         return super(RequestRetryPowerSchool, self).make_request(*args, **kwargs)
 
-
     def check_response(self, *args, **kwargs):
         """
         It checks the response of the function.
         """
-        response = kwargs.get('response')
-        request = kwargs.get('request')
-        stream = request.get('stream', '')
+        response = kwargs.get("response")
+        request = kwargs.get("request")
+        stream = request.get("stream", "")
         try:
             if response.ok:
                 if stream:
                     return True
-                if 'count' in response.content:
+                if "count" in response.content:
                     return True
-                elif 'access_token' in response.content:
+                elif "access_token" in response.content:
                     return True
-                elif 'record' in response.content:
+                elif "record" in response.content:
                     return True
-                elif 'message' in response.content:
+                elif "message" in response.content:
                     response.status_code = 403
                     return False
                 else:
