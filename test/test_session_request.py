@@ -1,4 +1,3 @@
-
 import mock
 import pytest
 from PowerSchool.utils.mockfactory import MockFactory
