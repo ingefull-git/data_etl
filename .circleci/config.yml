@@ -86,7 +86,7 @@ jobs:
 workflows:
   main:
     jobs:
-      - linting_testing:
+      - linting_testing
         # context: CICD
           # filters:
           #   tags:
