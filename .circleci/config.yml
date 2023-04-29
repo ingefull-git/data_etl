@@ -88,11 +88,11 @@ workflows:
     jobs:
       - linting_testing:
         # context: CICD
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+          # filters:
+          #   tags:
+          #     only: /.*/
+          #   branches:
+          #     ignore: /.*/
       # - build-base-image:
       # - build-app-image:
 
