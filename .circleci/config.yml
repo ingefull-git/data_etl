@@ -24,13 +24,13 @@ jobs:
       - run:
           name: Lint with Black and isort
           command: |
-            black --check --diff sim_app/
-            isort --check-only --diff --profile black sim_app/
+            black --check --diff .
+            isort --check-only --diff --profile black .
 
       # Lint with Flake8
       - run:
           name: Lint with Flake8
-          command: flake8 sim_app/
+          command: flake8 .
 
       # Test with Pytest
       # - run:
