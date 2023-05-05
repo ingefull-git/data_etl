@@ -8,7 +8,7 @@ jobs:
   merge:
     runs-on: ubuntu-latest
     steps:
-      - name: Select branch to merge into
+      - name: Check branch to merge into
         run: |
           if [[ $PR_BRANCH_NAME == /*base-branch && $BASE_BRANCH_NAME != "base" ]]; then
             echo "error: Base branches can only be merged into the base branch.!!!!"
