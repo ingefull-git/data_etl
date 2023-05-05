@@ -5,6 +5,16 @@ orbs:
   aws-ecr: circleci/aws-ecr@7.3.0
 
 jobs:
+  check-branch:
+    executor: python/default
+    steps:
+      - checkout
+      - name: Select branch to merge into
+        run: |
+          if [[ $PR_BRANCH_NAME == /*base-branch && $BASE_BRANCH_NAME != "base" ]]; then
+            echo "error: Base branches can only be merged into the base branch.!!!!"
+            exit 1
+          fi
   linting:
     executor: python/default
     resource_class: small
