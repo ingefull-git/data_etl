@@ -19,5 +19,4 @@ htmlcov/
 *.json
 
 !requirements.txt
-!requirements-base.txt
 !.circleci/
