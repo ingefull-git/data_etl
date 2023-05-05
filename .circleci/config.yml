@@ -68,8 +68,7 @@ workflows:
           context: CICD
           filters:
             branches:
-              only:
-                - base
+              only: /.*base-branch/
             tags:
               only: /.*/
       - testing:
