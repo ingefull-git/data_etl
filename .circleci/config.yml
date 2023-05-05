@@ -69,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                - base-image
+                - base
             tags:
               only: /.*/
       - testing:
@@ -77,7 +77,7 @@ workflows:
           filters:
             branches:
               only:
-                - base-image
+                - base
             tags:
               only: /.*base-image*/
       # - deploy_base_image:
