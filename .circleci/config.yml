@@ -68,16 +68,14 @@ workflows:
           context: CICD
           filters:
             branches:
-              only:
-                - base
+              only: /.*base-branch/
             tags:
               only: /.*/
       - testing:
           context: CICD
           filters:
             branches:
-              only:
-                - base
+              only: /.*base-branch/
             tags:
               only: /.*/
       # - deploy_base_image:
