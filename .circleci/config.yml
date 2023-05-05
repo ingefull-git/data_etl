@@ -47,13 +47,13 @@ workflows:
             tags:
               only: /.*master-branch*/
             branches:
-              only: /.*master-branch*/
+              only: /.*master-branch/
       - testing:
           filters:
             tags:
               only: /.*master-branch*/
             branches:
-              only: /.*master-branch*/
+              only: /.*master-branch-tests/
 
       # - build-base-image:
       # - build-app-image:
