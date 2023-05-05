@@ -21,3 +21,4 @@ htmlcov/
 !requirements.txt
 !requirements-base.txt
 !.circleci/
+!.github/

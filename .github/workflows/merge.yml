@@ -1,0 +1,33 @@
+name: Merge PR to branch
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Select branch to merge into
+        run: |
+          if [[ ${{ github.head_ref }} == feature/* ]]; then
+            echo "Merging into develop branch"
+            git fetch origin
+            git checkout -b develop origin/develop
+          elif [[ ${{ github.head_ref }} == hotfix/* ]]; then
+            echo "Merging into production branch"
+            git fetch origin
+            git checkout -b production origin/production
+          elif [[ ${{ github.head_ref }} == *base-branch* ]]; then
+            echo "Merging into base branch"
+            git fetch origin
+            git checkout -b base origin/base
+          else
+            echo "No matching branch found"
+          fi
+      - name: Build and test code
+        run: |
+          # Add build and test commands here
+      - name: Merge pull request
+        run: |
+          # Add commands to merge the pull request into the selected branch here
