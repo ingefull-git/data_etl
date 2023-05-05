@@ -2,7 +2,7 @@ name: Merge PR to branch
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 
 jobs:
   merge:
@@ -14,20 +14,15 @@ jobs:
             echo "Merging into develop branch"
             git fetch origin
             git checkout -b develop origin/develop
-            git merge --no-ff "${{ github.head_ref }}"
-            git push origin develop
           elif [[ ${{ github.head_ref }} == hotfix/* ]]; then
             echo "Merging into production branch"
             git fetch origin
             git checkout -b production origin/production
-            git merge --no-ff "${{ github.head_ref }}"
-            git push origin production
           elif [[ ${{ github.head_ref }} == *base-branch* ]]; then
             echo "Merging into base branch"
             git fetch origin
             git checkout -b base origin/base
-            git merge --no-ff "${{ github.head_ref }}"
-            git push origin base
           else
             echo "No matching branch found"
           fi
+     
