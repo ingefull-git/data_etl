@@ -25,9 +25,4 @@ jobs:
           else
             echo "No matching branch found"
           fi
-      - name: Build and test code
-        run: |
-          # Add build and test commands here
-      - name: Merge pull request
-        run: |
-          # Add commands to merge the pull request into the selected branch here
+ 
