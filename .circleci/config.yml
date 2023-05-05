@@ -80,17 +80,17 @@ workflows:
                 - base
             tags:
               only: /.*/
-      - deploy_base_image:
-          context: CICD
-          requires:
-            - linting
-            - testing
-          filters:
-            branches:
-              only:
-                - main
-            tags:
-              only: /.*base-image*/
+      # - deploy_base_image:
+      #     context: CICD
+      #     requires:
+      #       - linting
+      #       - testing
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
+      #       tags:
+      #         only: /.*base-image*/
       # - deploy_app_image:
       #     context: CICD
       #     requires:
