@@ -69,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                - base
+                - base-image
             tags:
               only: /.*base-image*/
       - testing:
@@ -77,9 +77,9 @@ workflows:
           filters:
             branches:
               only:
-                - base
+                - base-image
             tags:
-              only: /.*/
+              only: /.*base-image*/
       # - deploy_base_image:
       #     context: CICD
       #     requires:
