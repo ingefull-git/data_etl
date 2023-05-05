@@ -10,19 +10,8 @@ jobs:
     steps:
       - name: Select branch to merge into
         run: |
-          if [[ ${{ github.head_ref }} == feature/* ]]; then
-            echo "Merging into develop branch"
-            git fetch origin
-            git checkout -b develop origin/develop
-          elif [[ ${{ github.head_ref }} == hotfix/* ]]; then
-            echo "Merging into production branch"
-            git fetch origin
-            git checkout -b production origin/production
-          elif [[ ${{ github.head_ref }} == *base-branch* ]]; then
-            echo "Merging into base branch"
-            git fetch origin
-            git checkout -b base origin/base
-          else
-            echo "No matching branch found"
+          if [[ $PR_BRANCH_NAME == /*base-branch && $BASE_BRANCH_NAME != "base" ]]; then
+            echo "error: Base branches can only be merged into the base branch.!!!!"
+            exit 1
           fi
  
