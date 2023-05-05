@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check branch to merge into
         run: |
-          if [[ $PR_BRANCH_NAME == /*base-branch && $BASE_BRANCH_NAME != "base" ]]; then
+          if [[ $PR_BRANCH_NAME == /*base-branch && $PR_BASE_BRANCH_NAME != "base" ]]; then
             echo "error: Base branches can only be merged into the base branch.!!!!"
             exit 1
           fi
