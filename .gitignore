@@ -20,4 +20,5 @@ htmlcov/
 
 !requirements.txt
 !requirements-base.txt
+!requirements-app.txt
 !.circleci/
