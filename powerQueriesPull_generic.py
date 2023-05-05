@@ -99,6 +99,7 @@ import datetime as dt
 import json
 import sys
 import time
+from utils.get_info import updatedict
 
 from utils import client_info as ci
 from utils import configuration
@@ -109,7 +110,6 @@ from utils import session_request as sr
 from utils.adapters import PowerSchoolAdapter
 from utils.base import PullGeneric
 from utils.decorators import debuglog, for_all_methods
-from utils.get_info import updatedict
 
 TIMEOUT = 600.0
 
