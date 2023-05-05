@@ -54,6 +54,13 @@ jobs:
 workflows:
   uplift-app:
     jobs:
+      - check-branch:
+          context: CICD
+          filters:
+            branches:
+              only: /.*base-branch/
+            tags:
+              only: /.*/
       - linting:
           context: CICD
           filters:
