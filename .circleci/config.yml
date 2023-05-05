@@ -47,8 +47,7 @@ workflows:
             tags:
               only: /.*master-branch*/
             branches:
-              only:
-                - master
+              only: /.*master-branch/
       - testing:
           filters:
             tags:
