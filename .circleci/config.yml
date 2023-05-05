@@ -86,13 +86,13 @@ jobs:
 workflows:
   main:
     jobs:
-      - linting_testing
-        # context: CICD
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+      - linting_testing:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
       # - build-base-image:
       # - build-app-image:
 
