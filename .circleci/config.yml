@@ -45,17 +45,16 @@ workflows:
       - linting:
           filters:
             tags:
-              only: /.*/
+              only: /.*master-branch*/
             branches:
-              only:
-                - master
+              only: /.*master-branch*/
       - testing:
           filters:
             tags:
-              only: /.*/
+              only: /.*master-branch*/
             branches:
-              only:
-                - master
+              only: /.*master-branch*/
+
       # - build-base-image:
       # - build-app-image:
 
