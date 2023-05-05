@@ -9,7 +9,7 @@ jobs:
     executor: python/default
     steps:
       - checkout
-        run:
+      - run:
           name: Select branch to merge into
           command: |
             if [[ "$CIRCLE_BRANCH" == /*base-image ]]; then
