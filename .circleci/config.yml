@@ -1,92 +1,55 @@
 version: '2.1'
 
 orbs:
-  python: circleci/python@2.1.0
+  python: circleci/python@2.0.3
+  aws-ecr: circleci/aws-ecr@7.3.0
 
 jobs:
-  linting_testing:
+  linting:
     executor: python/default
+    resource_class: small
+    working_directory: ~/app
     steps:
       - checkout
-
-      # Install dependencies
-      - python/install-packages:
-          pkg-manager: pip
-      - python/install-packages:
-          pip-dependency-file: requirements.txt
-          pkg-manager: pip
-      - python/install-packages:
-          args: black isort flake8
-          pkg-manager: pip
-          pypi-cache: true
-
-      # Lint with Black and isort
+      - run:
+          name: Install dependencies
+          command: |
+            pip install --upgrade pip
+            pip install -r build/requirements-base.txt
       - run:
           name: Lint with Black and isort
           command: |
             black --check --diff .
-            isort --check-only --diff --profile black .
-
-      # Lint with Flake8
+            isort --check-only --diff --profile black --line-length 80 .
       - run:
           name: Lint with Flake8
           command: flake8 .
-
-      # Test with Pytest
-      # - run:
-      #     name: Test with Pytest
-      #     command: pytest
-  
-  # Build and push base image to AWS ECR
-  build-base-image:
+  testing:
     executor: python/default
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install --upgrade pip
+            pip install pytest
+      - run:
+          name: Test with Pytest
+          command: pytest -sv
 
-      - aws-ecr/build-and-push-image:
-          name: Deploy base image to ECR
-          context: CICD
-          attach-workspace: true
-          account-url: AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com
-          region: AWS_REGION
-          dockerfile: build/Dockerfile
-          extra-build-args: "--build-arg BASE_IMAGE_VERSION=dev_base --build-arg JOBS_VERSION=${CIRCLE_SHA1::7}"
-          repo: analytics/simulation-frontend
-          tag: ${CIRCLE_SHA1::7},${CIRCLE_BRANCH},base
-          requires:
-            - linting_testing
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-  
-  # Build and push Docker image to AWS ECR
-  build-app-image:
-    executor: python/default
-    steps:
-      - checkout
-      - aws-ecr/build-and-push-image:
-          name: Deploy prod image to ECR
-          context: CICD
-          attach-workspace: true
-          dockerfile: Dockerfile
-          extra-build-args: "--build-arg BASE_IMAGE_VERSION=v0.0.1 --build-arg JOBS_VERSION=${CIRCLE_TAG}"
-          repo: analytics/simulation-frontend
-          tag: ${CIRCLE_TAG}
-          requires:
-            - linting_testing
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-  
+
   
 workflows:
   main:
     jobs:
-      - linting_testing:
+      - linting:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
+      - testing:
           filters:
             tags:
               only: /.*/
@@ -96,4 +59,3 @@ workflows:
       # - build-base-image:
       # - build-app-image:
 
-#circleci build --job build-base-image --param build_base_image=true
