@@ -71,7 +71,7 @@ workflows:
               only:
                 - base-image
             tags:
-              only: /.*base-image*/
+              only: /.*/
       - testing:
           context: CICD
           filters:
