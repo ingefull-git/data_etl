@@ -69,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                -base
+                - base
             tags:
               only: /.*base-image*/
       - testing:
