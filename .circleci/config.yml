@@ -10,13 +10,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Select branch to merge into
+          name: Check selected branch and current branch
           command: |
-            if [[ "$CIRCLE_BRANCH" == /*base-image ]]; then
-              if [[ $BASE_BRANCH_NAME != "base" ]]; then
-                echo "error: Base branches can only be merged into the base branch.!!!!"
-                exit 1
-              fi
+            if [[ "$CIRCLE_BRANCH" == *base-branch* && "$CIRCLE_PULL_REQUEST_BASE_BRANCH" == "base" ]]; then
+              echo "Selected branch is base and current branch has base-branch in its name"
+            else
+              echo "Selected branch is not base or current branch does not have base-branch in its name..!!!"
+              exit 1
             fi
   linting:
     executor: python/default
