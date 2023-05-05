@@ -79,7 +79,7 @@ workflows:
               only:
                 - base
             tags:
-              only: /.*base-image*/
+              only: /.*/
       # - deploy_base_image:
       #     context: CICD
       #     requires:
