@@ -15,7 +15,7 @@ jobs:
           name: Install dependencies
           command: |
             pip install --upgrade pip
-            pip install -r build/requirements-base.txt
+            pip install -r requirements-app.txt
       - run:
           name: Lint with Black and isort
           command: |
@@ -47,7 +47,8 @@ workflows:
             tags:
               only: /.*master-branch*/
             branches:
-              only: /.*master-branch/
+              only:
+                - master
       - testing:
           filters:
             tags:
