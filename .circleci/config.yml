@@ -12,10 +12,10 @@ jobs:
       - run:
           name: Check selected branch and current branch
           command: |
-            if [[ $CIRCLE_BRANCH == *base-branch* && $BASE_BRANCH_NAME == "base" ]]; then
-              echo "Selected branch is base and current branch has base-branch in its name" $CIRCLE_BRANCH "///" $BASE_BRANCH_NAME
+            if [[ $CIRCLE_BRANCH == *base-branch* && $BASE_BRANCH == "base" ]]; then
+              echo "Selected branch is base and current branch has base-branch in its name" $CIRCLE_BRANCH "///" $BASE_BRANCH "///" $CIRCLE_PULL_REQUEST
             else
-              echo "Selected branch is not base or current branch does not have base-branch in its name..!!!" $CIRCLE_BRANCH "///" $BASE_BRANCH_NAME
+              echo "Selected branch is not base or current branch does not have base-branch in its name..!!!" $CIRCLE_BRANCH "///" $BASE_BRANCH "///" $CIRCLE_PULL_REQUEST
               exit 1
             fi
   linting:
