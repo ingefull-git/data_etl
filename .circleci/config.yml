@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Check selected branch and current branch
           command: |
-            apt-get install curl
+            sudo apt-get install curl
             taget_branch = $(curl -s "some-url" | grep -o '<span class="css-truncate-target">[^<]*</span>' | sed 's/<[^>]*>//g')
             if [[ $CIRCLE_BRANCH == *base-branch* && $taget_branch == "base" ]]; then
               echo "Selected branch is base and current branch has base-branch in its name" $CIRCLE_BRANCH "///" $target_branch "///" $CIRCLE_PULL_REQUEST "///" $CIRCLE_PULL_REQUEST_TARGET_BRANCH
