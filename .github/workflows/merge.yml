@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check branch to merge into
         run: |
-          if [ ${{ github.base_ref }} != "main" ]; then
+          if [ ${{ github.base_ref }} != "base" ]; then
             echo "error: Base branches can only be merged into the base branch.!!!!" "///" ${{ github.base_ref }} "///"
             exit 1
           else
@@ -19,7 +19,7 @@ jobs:
       - name: Check if PR name contains 'base branch'
         run: |
           pr_title="${{ github.event.pull_request.title }}"
-          if [[ ! $pr_title == *"base branch"* ]]; then
+          if [[ ! $pr_title == *"base-branch"* ]]; then
             echo "error: The pull request name must contain 'base branch'" "///" ${{ github.event.pull_request.title }} "///"
             exit 1
           else
