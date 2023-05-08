@@ -10,11 +10,19 @@ jobs:
     steps:
       - name: Check branch to merge into
         run: |
-          if [ $PR_BRANCH_NAME == /*base-branch && ${{ github.base_ref }} != "main" ]; then
-            echo "error: Base branches can only be merged into the base branch.!!!!" "///" $PR_BRANCH_NAME "///" ${{ github.base_ref }} "///"
+          if [ ${{ github.base_ref }} != "base" ]; then
+            echo "error: Base branches can only be merged into the base branch.!!!!" "///" ${{ github.base_ref }} "///"
             exit 1
           else
-            echo "OK: Base branches is base branch.!!!!" "///" $PR_BRANCH_NAME "///" ${{ github.base_ref }} "///"
+            echo "OK: Base branches is base branch.!!!!" "///" ${{ github.base_ref }} "///"
             exit 1
           fi
- 
+      - name: Check if PR name contains 'base-branch'
+        run: |
+          pr_title="${{ github.event.pull_request.title }}"
+          if [[ ! $pr_title == *"base-branch"* ]]; then
+            echo "error: The pull request name must contain 'base-branch'" "///" ${{ github.event.pull_request.title }} "///"
+            exit 1
+          else
+            echo "OK: Branch name contains base-branch.!!!!" "///" ${{ github.event.pull_request.title }} "///"
+          fi
