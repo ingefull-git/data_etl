@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check branch to merge into
         run: |
-          if [ ${{ github.base_ref }} != "base" ]; then
+          if [ ${{ github.base_ref }} != "main" ]; then
             echo "error: Base branches can only be merged into the base branch.!!!!" "///" ${{ github.base_ref }} "///"
             exit 1
           else
