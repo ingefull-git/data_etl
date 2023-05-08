@@ -16,12 +16,12 @@ jobs:
           else
             echo "OK: Base branches is base branch.!!!!" "///" ${{ github.base_ref }} "///"
           fi
-      - name: Check if PR name contains 'base-branch'
+      - name: Check if PR name contains 'base branch'
         run: |
           pr_title="${{ github.event.pull_request.title }}"
-          if [[ ! $pr_title == *"base-branch"* ]]; then
-            echo "error: The pull request name must contain 'base-branch'" "///" ${{ github.event.pull_request.title }} "///"
+          if [[ ! $pr_title == *"base branch"* ]]; then
+            echo "error: The pull request name must contain 'base branch'" "///" ${{ github.event.pull_request.title }} "///"
             exit 1
           else
-            echo "OK: Branch name contains base-branch.!!!!" "///" ${{ github.event.pull_request.title }} "///"
+            echo "OK: Branch name contains base branch.!!!!" "///" ${{ github.event.pull_request.title }} "///"
           fi
