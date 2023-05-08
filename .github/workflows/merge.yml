@@ -13,5 +13,8 @@ jobs:
           if [ $PR_BRANCH_NAME == /*base-branch && ${{ github.base_ref }} != "base" ]; then
             echo "error: Base branches can only be merged into the base branch.!!!!" "///" $PR_BRANCH_NAME "///" ${{ github.base_ref }} "///"
             exit 1
+          else
+            echo "OK: Base branches is base branch.!!!!" "///" $PR_BRANCH_NAME "///" ${{ github.base_ref }} "///"
+            exit 1
           fi
  
