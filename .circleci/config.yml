@@ -45,13 +45,13 @@ workflows:
           context: CICD
           filters:
             branches:
-              only: /.*base-branch/
+              only: /.*update-branch/
             tags:
-              only: /.*/
+              only: /.*v/
       - testing:
           context: CICD
           filters:
             branches:
-              only: /.*base-branch/
+              only: /.*update-branch/
             tags:
-              only: /.*/
+              only: /.*v0.1/
