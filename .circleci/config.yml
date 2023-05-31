@@ -45,7 +45,7 @@ workflows:
           context: CICD
           filters:
             branches:
-              only: /.*update-branch/
+              only: /.*update-image/
             tags:
               only: /^v*$/
       - testing:
