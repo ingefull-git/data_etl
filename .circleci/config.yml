@@ -47,11 +47,11 @@ workflows:
             branches:
               only: /.*update-image/
             tags:
-              only: /^v*$/
+              only: /^v*/
       - testing:
           context: CICD
           filters:
             branches:
               only: /.*update-branch/
             tags:
-              only: /^v0\.1$/
+              only: /^v0*/
