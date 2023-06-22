@@ -52,6 +52,6 @@ workflows:
           context: CICD
           filters:
             branches:
-              only: /.*update-base/
+              only: /.*update-base*/
             tags:
               only: /^v0*/
